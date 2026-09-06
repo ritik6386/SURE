@@ -24,6 +24,14 @@ app.add_middleware(
 
 app.include_router(router, prefix="/api")
 
+@app.get("/api/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "service": "SURE — Standards for Unified Regulatory Engine",
+        "version": "1.0.0"
+    }
+
 import os
 from fastapi.staticfiles import StaticFiles
 

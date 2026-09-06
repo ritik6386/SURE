@@ -12,5 +12,6 @@ if root_dir not in sys.path:
 
 from backend.app.main import app
 
-# Vercel ASGI Handler
+# Expose app and handler for Vercel ASGI
+app = app
 handler = app
