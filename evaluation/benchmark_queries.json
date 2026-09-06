@@ -1,0 +1,236 @@
+[
+  {
+    "id": 1,
+    "query": "200 kW induction motor for sewage pumping",
+    "expected_primary": "IS 12615",
+    "expected_category": "Electrical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "benchmark_demo"
+  },
+  {
+    "id": 2,
+    "query": "Solar PV module for government rooftop project",
+    "expected_primary": "IS 14286",
+    "expected_category": "Solar Energy",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "benchmark_demo"
+  },
+  {
+    "id": 3,
+    "query": "High-performance laptop for government office",
+    "expected_primary": "IS 13252",
+    "expected_category": "Electronics & IT",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-II / CRS",
+    "test_type": "benchmark_demo"
+  },
+  {
+    "id": 4,
+    "query": "Use IS 325 for three-phase induction motor",
+    "expected_primary": "IS 325",
+    "expected_category": "Electrical",
+    "expected_qco": true,
+    "expected_superseded": true,
+    "test_type": "superseded_warning"
+  },
+  {
+    "id": 5,
+    "query": "Submersible pump sets for rural irrigation tube wells",
+    "expected_primary": "IS 8034",
+    "expected_category": "Mechanical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "qco_upcoming"
+  },
+  {
+    "id": 6,
+    "query": "Ordinary Portland Cement 53 grade for bridge pier concreting",
+    "expected_primary": ["IS 269", "IS 12269"],
+    "expected_category": "Civil & Construction",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "civil_materials"
+  },
+  {
+    "id": 7,
+    "query": "TMT Fe 500D steel rebars for seismic resistant high-rise building",
+    "expected_primary": "IS 1786",
+    "expected_category": "Civil & Construction",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "civil_materials"
+  },
+  {
+    "id": 8,
+    "query": "UPVC pipes for potable water distribution line in Jal Jeevan Mission",
+    "expected_primary": "IS 4985",
+    "expected_category": "Civil & Construction",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "civil_piping"
+  },
+  {
+    "id": 9,
+    "query": "Outdoor oil immersed distribution transformer 500 kVA 11kV BEE star rated",
+    "expected_primary": "IS 1180",
+    "expected_category": "Electrical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "electrical_grid"
+  },
+  {
+    "id": 10,
+    "query": "FRLS PVC insulated flexible copper wire 1100V for school building",
+    "expected_primary": "IS 694",
+    "expected_category": "Electrical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "electrical_cables"
+  },
+  {
+    "id": 11,
+    "query": "11kV XLPE underground armoured power distribution cable",
+    "expected_primary": "IS 7098",
+    "expected_category": "Electrical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "electrical_cables"
+  },
+  {
+    "id": 12,
+    "query": "Moulded case circuit breaker MCCB 400A for main distribution panel",
+    "expected_primary": "IS/IEC 60947",
+    "expected_category": "Electrical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "electrical_switchgear"
+  },
+  {
+    "id": 13,
+    "query": "Miniature circuit breaker MCB 32A C-curve for residential quarters",
+    "expected_primary": "IS/IEC 60898",
+    "expected_category": "Electrical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "electrical_switchgear"
+  },
+  {
+    "id": 14,
+    "query": "Smart prepaid electricity meters direct connected for utility RDSS tender",
+    "expected_primary": "IS 16444",
+    "expected_category": "Electrical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "smart_metering"
+  },
+  {
+    "id": 15,
+    "query": "Municipal LED street lighting luminaire 120W with high efficiency",
+    "expected_primary": "IS 10322",
+    "expected_category": "Electrical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "lighting"
+  },
+  {
+    "id": 16,
+    "query": "On-grid solar inverter 50kW string inverter with anti-islanding protection",
+    "expected_primary": "IS 16221",
+    "expected_category": "Solar Energy",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-II / CRS",
+    "test_type": "solar_equipment"
+  },
+  {
+    "id": 17,
+    "query": "Lithium ion secondary battery pack for energy storage system ESS",
+    "expected_primary": ["IS 16046", "IS 16627"],
+    "expected_category": "Solar Energy",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-II / CRS",
+    "test_type": "energy_storage"
+  },
+  {
+    "id": 18,
+    "query": "Online UPS 20 kVA for municipal data center with battery backup",
+    "expected_primary": "IS 16242",
+    "expected_category": "Electronics & IT",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-II / CRS",
+    "test_type": "it_power"
+  },
+  {
+    "id": 19,
+    "query": "IP CCTV surveillance cameras for smart city project with PoE support",
+    "expected_primary": "IS 13252",
+    "expected_category": "Electronics & IT",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-II / CRS",
+    "test_type": "surveillance"
+  },
+  {
+    "id": 20,
+    "query": "Portable ABC powder fire extinguisher 6kg for hospital corridor",
+    "expected_primary": "IS 15683",
+    "expected_category": "Mechanical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "fire_safety"
+  },
+  {
+    "id": 21,
+    "query": "Horizontal centrifugal pump for clear cold water circulation",
+    "expected_primary": "IS 1520",
+    "expected_category": "Mechanical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "pumps"
+  },
+  {
+    "id": 22,
+    "query": "Cast iron sluice valves 300 mm size for urban water pipeline isolation",
+    "expected_primary": "IS 14846",
+    "expected_category": "Mechanical",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "valves"
+  },
+  {
+    "id": 23,
+    "query": "Sterile disposable hypodermic syringes 5ml for vaccination campaign",
+    "expected_primary": "IS 10258",
+    "expected_category": "Medical Devices",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / CDSCO Medical License",
+    "test_type": "medical_consumables"
+  },
+  {
+    "id": 24,
+    "query": "Sterile rubber surgical gloves for operation theater",
+    "expected_primary": "IS 13422",
+    "expected_category": "Medical Devices",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "medical_consumables"
+  },
+  {
+    "id": 25,
+    "query": "Caustic soda flakes pure technical grade for water treatment plant",
+    "expected_primary": "IS 252",
+    "expected_category": "Chemicals",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "chemicals"
+  },
+  {
+    "id": 26,
+    "query": "Packaged bottled drinking water 1 litre for state summit meeting",
+    "expected_primary": "IS 14543",
+    "expected_category": "Food & Agriculture",
+    "expected_qco": true,
+    "expected_scheme": "Scheme-I / ISI Mark",
+    "test_type": "food_and_water"
+  }
+]
