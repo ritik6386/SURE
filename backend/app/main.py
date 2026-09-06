@@ -10,7 +10,9 @@ from backend.app.api.routes import router
 app = FastAPI(
     title="SURE — Standards for Unified Regulatory Engine",
     description="AI-Powered Indian Standards Recommendation Engine for Smart Public Procurement",
-    version="1.0.0"
+    version="1.0.0",
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json"
 )
 
 # Enable CORS for local React development
@@ -23,6 +25,16 @@ app.add_middleware(
 )
 
 app.include_router(router, prefix="/api")
+
+@app.get("/api")
+@app.get("/api/")
+def api_root():
+    return {
+        "status": "online",
+        "service": "SURE — Standards for Unified Regulatory Engine",
+        "version": "1.0.0",
+        "docs": "/api/docs"
+    }
 
 @app.get("/api/health")
 def health_check():
