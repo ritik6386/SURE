@@ -7,3 +7,8 @@ frontend/node_modules
 .git
 .pytest_cache
 tests
+evaluation
+scripts
+.cache
+.vscode
+*.log

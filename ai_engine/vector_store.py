@@ -6,12 +6,79 @@ Implements hybrid dense semantic search, cosine similarity ranking, and domain r
 import os
 import json
 import re
+import math
+from collections import Counter
 from typing import List, Dict, Any, Optional
-import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 from ai_engine.domain_classifier import classify_domain, extract_parameters
+
+class PureTFIDF:
+    """Lightweight zero-dependency TF-IDF Vectorizer with Sublinear TF & Cosine Similarity."""
+    def __init__(self, ngram_range=(1, 3), sublinear_tf=True):
+        self.ngram_range = ngram_range
+        self.sublinear_tf = sublinear_tf
+        self.token_pattern = re.compile(r'(?u)\b\w\w+\b')
+        self.idf: Dict[str, float] = {}
+        self.doc_vectors: List[Dict[str, float]] = []
+
+    def _tokenize(self, text: str) -> List[str]:
+        return self.token_pattern.findall(text)
+
+    def _get_ngrams(self, tokens: List[str]) -> List[str]:
+        ngrams = []
+        n = len(tokens)
+        for k in range(self.ngram_range[0], self.ngram_range[1] + 1):
+            for i in range(n - k + 1):
+                ngrams.append(' '.join(tokens[i:i+k]))
+        return ngrams
+
+    def fit_transform(self, docs: List[str]):
+        df = Counter()
+        N = len(docs)
+        doc_term_counts = []
+        for doc in docs:
+            tokens = self._tokenize(doc)
+            ngrams = self._get_ngrams(tokens)
+            counts = Counter(ngrams)
+            doc_term_counts.append(counts)
+            for term in counts:
+                df[term] += 1
+
+        self.idf = {term: math.log((1.0 + N) / (1.0 + count)) + 1.0 for term, count in df.items()}
+
+        self.doc_vectors = []
+        for counts in doc_term_counts:
+            vec = {}
+            norm_sq = 0.0
+            for term, count in counts.items():
+                w = (1.0 + math.log(count)) * self.idf[term] if self.sublinear_tf else float(count) * self.idf[term]
+                vec[term] = w
+                norm_sq += w * w
+            norm = math.sqrt(norm_sq) if norm_sq > 0 else 1.0
+            self.doc_vectors.append({term: w / norm for term, w in vec.items()})
+        return self
+
+    def transform_and_score(self, query: str) -> List[float]:
+        tokens = self._tokenize(query)
+        ngrams = self._get_ngrams(tokens)
+        q_counts = Counter(ngrams)
+        q_vec = {}
+        norm_sq = 0.0
+        for term, count in q_counts.items():
+            if term in self.idf:
+                w = (1.0 + math.log(count)) * self.idf[term] if self.sublinear_tf else float(count) * self.idf[term]
+                q_vec[term] = w
+                norm_sq += w * w
+        if norm_sq == 0:
+            return [0.0] * len(self.doc_vectors)
+        norm = math.sqrt(norm_sq)
+        q_norm = {term: w / norm for term, w in q_vec.items()}
+
+        scores = [0.0] * len(self.doc_vectors)
+        for idx, doc_vec in enumerate(self.doc_vectors):
+            dot = sum(doc_vec[t] * qw for t, qw in q_norm.items() if t in doc_vec)
+            scores[idx] = dot
+        return scores
 
 class BISVectorStore:
     def __init__(self, data_path: Optional[str] = None):
@@ -22,8 +89,7 @@ class BISVectorStore:
         self.data_path = data_path
         self.standards: List[Dict[str, Any]] = []
         self.doc_texts: List[str] = []
-        self.vectorizer: Optional[TfidfVectorizer] = None
-        self.tfidf_matrix = None
+        self.vectorizer: Optional[PureTFIDF] = None
         self.std_index: Dict[str, Dict[str, Any]] = {}
         
         self.load_data()
@@ -67,13 +133,11 @@ class BISVectorStore:
             self.std_index[clean_id.replace(" ", "")] = std
 
         # Build subword character + word n-gram vectorizer for robust semantic matching
-        self.vectorizer = TfidfVectorizer(
+        self.vectorizer = PureTFIDF(
             ngram_range=(1, 3),
-            analyzer="word",
-            sublinear_tf=True,
-            min_df=1
+            sublinear_tf=True
         )
-        self.tfidf_matrix = self.vectorizer.fit_transform(self.doc_texts)
+        self.vectorizer.fit_transform(self.doc_texts)
 
     def search(self, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
         """
@@ -93,11 +157,10 @@ class BISVectorStore:
             direct_match = self.std_index.get(std_clean) or self.std_index.get(std_clean.replace(" ", ""))
 
         # Compute cosine similarity
-        query_vec = self.vectorizer.transform([norm_query])
-        scores = cosine_similarity(query_vec, self.tfidf_matrix).flatten()
+        scores = self.vectorizer.transform_and_score(norm_query)
 
         # Domain boosting & keyword reinforcement
-        boosted_scores = np.copy(scores)
+        boosted_scores = list(scores)
         query_words = set(norm_query.split())
 
         for idx, std in enumerate(self.standards):
@@ -139,7 +202,7 @@ class BISVectorStore:
                 boosted_scores[idx] += 0.80
 
         # Sort top indices
-        top_indices = np.argsort(boosted_scores)[::-1][:top_k * 2]
+        top_indices = sorted(range(len(boosted_scores)), key=lambda i: boosted_scores[i], reverse=True)[:top_k * 2]
 
         results = []
         for rank, idx in enumerate(top_indices):
